@@ -4,6 +4,11 @@ en:
         models:
           user:
             attributes:
+              name:
+                blank: You need to enter a name.
+              email:
+                taken: Email has already been taken.
+                invalid: You need to enter an email.
               password:
                 too_short: must be at least 8 characters long.
               password_confirmation:

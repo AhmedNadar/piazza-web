@@ -1,4 +1,5 @@
 require "test_helper"
+
 class UsersControllerTest < ActionDispatch::IntegrationTest
   test "redirects to feed after successful sign up" do
     get sign_up_path
@@ -16,10 +17,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
+    assert_not_empty cookies[:app_session]
+
     follow_redirect!
     assert_select ".notification.is-success",
       text: I18n.t("users.create.welcome", name: "John")
   end
+
   test "renders errors if input data is invalid" do
     get sign_up_path
     assert_response :ok
@@ -39,6 +43,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     text:
       I18n.t("activerecord.errors.models.user.attributes.password.too_short")
   end
+
   test "renders errors if password data is invalid" do
     get sign_up_path
     assert_response :ok
